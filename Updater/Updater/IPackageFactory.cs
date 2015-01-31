@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Updater
 {
-    public interface IPackageObject
+    public interface IPackageFactory
     {
-        string Hash { get; }
-        long Size { get; }
-        string Source { get; }
+        IPackage CreatePackage(XmlReader metadataReader);
     }
 }

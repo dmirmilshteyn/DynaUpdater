@@ -8,5 +8,6 @@ namespace Updater
 {
     public interface IUpdaterCache
     {
+
     }
 }
