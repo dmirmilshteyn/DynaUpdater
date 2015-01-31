@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.IntegrationTestRunn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.Android", "Android\Updater.Android.csproj", "{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.Desktop", "Desktop\Updater.Desktop.csproj", "{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
