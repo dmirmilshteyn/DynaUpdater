@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Updater
+{
+    public interface IPackageObject
+    {
+        string Hash { get; }
+        long Size { get; }
+        string Source { get; }
+    }
+}
