@@ -8,6 +8,8 @@ namespace Updater
 {
     public interface IUpdaterCache
     {
+        IUpdaterCacheStorageProvider StorageProvider { get; }
 
+        IPackageMetadataCollection LoadMetadataCollection();
     }
 }

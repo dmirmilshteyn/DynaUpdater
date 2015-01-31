@@ -37,18 +37,23 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IInstalledPackageMetadata.cs" />
+    <Compile Include="IInstalledPackageMetadataCollection.cs" />
+    <Compile Include="InstalledPackageMetadataCollection.cs" />
     <Compile Include="IPackage.cs" />
     <Compile Include="IPackageFactory.cs" />
     <Compile Include="IPackageMetadata.cs" />
     <Compile Include="IPackageMetadataCollection.cs" />
     <Compile Include="IUpdater.cs" />
     <Compile Include="IUpdaterCache.cs" />
+    <Compile Include="IUpdaterCacheStorageProvider.cs" />
     <Compile Include="IUpdateState.cs" />
     <Compile Include="PackageMetadataCollection.cs" />
     <Compile Include="PackageFactory.cs" />
     <Compile Include="PackageMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Updater.cs" />
+    <Compile Include="UpdaterCache.cs" />
     <Compile Include="UpdateState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
