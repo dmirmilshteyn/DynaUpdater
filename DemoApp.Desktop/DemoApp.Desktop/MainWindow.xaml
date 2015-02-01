@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Updater Demo" Height="350" Width="525">
     <Grid>
-        
+        <ContentPresenter Content="{Binding}" />
     </Grid>
 </Window>
