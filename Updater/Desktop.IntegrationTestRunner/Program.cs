@@ -51,14 +51,8 @@ namespace Updater.IntegrationTestRunner
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
                     IPackageAcquisition packageAcquisition = packageAcquisitionFactory.BuildPackageAcquisition(remotePackageStorageDirectory, storageProvider);
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
-                        ZipArchiveEntry installationInstructionsEntry = packageArchive.Entries.First((archiveEntry) => { return (archiveEntry.FullName == "Installation.xml"); });
-                        using (Stream installationInstructionsStream = installationInstructionsEntry.Open()) {
-                            using (XmlReader installationInstructionsReader = XmlReader.Create(installationInstructionsStream)) {
-                                IInstructionCollection instructionCollection = InstructionCollection.LoadFromXml(installationInstructionsReader);
-                                using (IPackage package = new Package(packageMetadata, packageArchive, instructionCollection)) {
+                        using (IPackage package = Package.OpenPackage(packageMetadata, packageArchive)) {
 
-                                }
-                            }
                         }
                     }
                 }
