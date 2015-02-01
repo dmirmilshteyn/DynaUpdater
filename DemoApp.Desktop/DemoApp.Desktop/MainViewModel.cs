@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,8 @@ namespace DemoApp.Desktop
             this.ClearCacheCommand = new Command(ClearCacheCommandCallback);
 
             this.Status = "Waiting for input...";
+
+            this.Image = LoadBitmapFromFile(Path.Combine("Data", "Image.png"));
         }
 
         private void ResetCommandCallback() {
@@ -50,6 +53,19 @@ namespace DemoApp.Desktop
 
         private void ClearCacheCommandCallback() {
 
+        }
+
+        private BitmapSource LoadBitmapFromFile(string file) {
+            using (FileStream fileStream = new FileStream(file, FileMode.Open)) {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = fileStream;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
         }
     }
 }
