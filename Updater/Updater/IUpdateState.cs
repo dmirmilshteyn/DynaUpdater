@@ -8,6 +8,6 @@ namespace Updater
 {
     public interface IUpdateState
     {
-        IPackageMetadataCollection Packages { get; }
+        ISet<IPackageMetadata> Packages { get; }
     }
 }

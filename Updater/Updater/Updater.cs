@@ -23,10 +23,10 @@ namespace Updater
                                 string name = metadataReader.GetAttribute("Name");
                                 string hash = metadataReader.GetAttribute("Hash");
                                 long size = Convert.ToInt64(metadataReader.GetAttribute("Size"));
-                                DateTime modifiedDate = DateTime.FromBinary(Convert.ToInt64(metadataReader.GetAttribute("ModifiedDate")));
+                                DateTime publishDate = DateTime.FromBinary(Convert.ToInt64(metadataReader.GetAttribute("PublishDate")));
 
-                                IPackageMetadata packageMetadata = new PackageMetadata(id, name, hash, size, modifiedDate);
-                                metadataCollection.Add(packageMetadata);
+                                IPackageMetadata packageMetadata = new PackageMetadata(id, name, hash, size, publishDate);
+                                metadataCollection.Add(id, packageMetadata);
                             }
                             break;
                     }
@@ -37,7 +37,29 @@ namespace Updater
         }
 
         public IUpdateState DetermineUpdateState(IInstalledPackageMetadataCollection installedPackages, IPackageMetadataCollection remotePackages) {
-            throw new NotImplementedException();
+            ISet<IPackageMetadata> outdatedPackages = new HashSet<IPackageMetadata>();
+
+            foreach (IPackageMetadata packageMetadata in remotePackages.Values) {
+                bool shouldUpdate = false;
+
+                IInstalledPackageMetadata installedPackageMetadata = null;
+                if (installedPackages.TryGetValue(packageMetadata.Id, out installedPackageMetadata)) {
+                    // Check if the installed version is outdated
+                    if (installedPackageMetadata.PublishDate < packageMetadata.PublishDate) {
+                        // This package is outdated - update it!
+                        shouldUpdate = true;
+                    }
+                } else {
+                    // This package has not been installed
+                    shouldUpdate = true;
+                }
+
+                if (shouldUpdate) {
+                    outdatedPackages.Add(packageMetadata);
+                }
+            }
+
+            return new UpdateState(outdatedPackages);
         }
     }
 }

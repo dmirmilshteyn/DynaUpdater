@@ -36,7 +36,7 @@ namespace Updater.IntegrationTestRunner
                 packageMetadataCollection = updater.ParseMetadataCollectionXml(xmlReader);
             }
 
-
+            IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
         }
     }
 }

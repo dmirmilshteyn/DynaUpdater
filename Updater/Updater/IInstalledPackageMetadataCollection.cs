@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Updater
 {
-    public interface IInstalledPackageMetadataCollection : ICollection<IInstalledPackageMetadata>
+    public interface IInstalledPackageMetadataCollection : IDictionary<int, IInstalledPackageMetadata>
     {
     }
 }

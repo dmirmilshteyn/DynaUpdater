@@ -8,9 +8,9 @@ namespace Updater
 {
     public class UpdateState : IUpdateState
     {
-        public IPackageMetadataCollection Packages { get; private set; }
+        public ISet<IPackageMetadata> Packages { get; private set; }
 
-        public UpdateState(IPackageMetadataCollection packages) {
+        public UpdateState(ISet<IPackageMetadata> packages) {
             this.Packages = packages;
         }
 

@@ -12,6 +12,6 @@ namespace Updater
         string Name { get; }
         string Hash { get; }
         long Size { get; }
-        DateTime ModifiedDate { get; }
+        DateTime PublishDate { get; }
     }
 }

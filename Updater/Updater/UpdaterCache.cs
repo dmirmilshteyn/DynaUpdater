@@ -28,11 +28,11 @@ namespace Updater
                                     string name = xmlReader.GetAttribute("Name");
                                     string hash = xmlReader.GetAttribute("Hash");
                                     long size = Convert.ToInt64(xmlReader.GetAttribute("Size"));
-                                    DateTime modifiedDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("ModifiedDate")));
+                                    DateTime publishDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("PublishDate")));
                                     DateTime installDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("InstallDate")));
 
-                                    IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(id, name, hash, size, modifiedDate, installDate);
-                                    installedMetadataCollection.Add(packageMetadata);
+                                    IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(id, name, hash, size, publishDate, installDate);
+                                    installedMetadataCollection.Add(id, packageMetadata);
                                 }
                                 break;
                         }
