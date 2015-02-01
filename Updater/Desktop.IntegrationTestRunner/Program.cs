@@ -48,6 +48,9 @@ namespace Updater.IntegrationTestRunner
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
                     IPackageAcquisition packageAcquisition = new PackageAcquisition(remotePackageStorageDirectory, storageProvider);
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
+                        using (IPackage package = new Package(packageMetadata, packageArchive)) {
+
+                        }
                     }
                 }
             }

@@ -42,6 +42,7 @@
     <Compile Include="IPackageMetadataCollection.cs" />
     <Compile Include="InstalledPackageMetadata.cs" />
     <Compile Include="IUpdateInstaller.cs" />
+    <Compile Include="Package.cs" />
     <Compile Include="PackageAcquisitionUpdateEventArgs.cs" />
     <Compile Include="PackageMetadataCollection.cs" />
     <Compile Include="IPackage.cs" />

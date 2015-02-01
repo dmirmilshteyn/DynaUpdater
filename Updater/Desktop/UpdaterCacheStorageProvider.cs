@@ -13,8 +13,9 @@ namespace Updater.Desktop
         private readonly string InstalledPackageFile = "InstalledPackages.xml";
 
         public string CacheDirectory { get; private set; }
-
         public string TemporaryDirectory { get; private set; }
+
+        bool disposed = false;
 
         public UpdaterCacheStorageProvider(string cacheDirectory) {
             this.CacheDirectory = cacheDirectory;
@@ -74,12 +75,15 @@ namespace Updater.Desktop
 
         public void Dispose() {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing) {
-            if (disposing) {
-                RemoveTemporaryFiles();
+        private void Dispose(bool disposing) {
+            if (!disposed) {
+                if (disposing) {
+                    RemoveTemporaryFiles();
+                }
+
+                disposed = true;
             }
         }
     }
