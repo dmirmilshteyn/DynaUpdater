@@ -8,17 +8,18 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Updater.Storage;
 
 namespace Updater.Desktop
 {
     public class PackageAcquisition : IPackageAcquisition
     {
         Uri remotePackageStorageDirectory;
-        IUpdaterCacheStorageProvider storageProvider;
+        ICacheStorageProvider storageProvider;
 
         public event EventHandler<PackageAcquisitionUpdateEventArgs> AcquisitionUpdate;
 
-        public PackageAcquisition(Uri remotePackageStorageDirectory, IUpdaterCacheStorageProvider storageProvider) {
+        public PackageAcquisition(Uri remotePackageStorageDirectory, ICacheStorageProvider storageProvider) {
             this.remotePackageStorageDirectory = remotePackageStorageDirectory;
             this.storageProvider = storageProvider;
         }

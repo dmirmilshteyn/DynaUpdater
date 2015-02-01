@@ -57,7 +57,7 @@
     <Compile Include="IInstalledPackageMetadataCollection.cs" />
     <Compile Include="IUpdater.cs" />
     <Compile Include="IUpdaterCache.cs" />
-    <Compile Include="IUpdaterCacheStorageProvider.cs" />
+    <Compile Include="Storage\ICacheStorageProvider.cs" />
     <Compile Include="IUpdateState.cs" />
     <Compile Include="PackageMetadataEqualityComparer.cs" />
     <Compile Include="InstalledPackageMetadataCollection.cs" />

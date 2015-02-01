@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Updater
+namespace Updater.Storage
 {
-    public interface IUpdaterCacheStorageProvider : IDisposable
+    public interface ICacheStorageProvider : IDisposable
     {
         /// <summary>
         /// Gets the installed package metadata reader. Reads from the file-system, using the platform implementation. 

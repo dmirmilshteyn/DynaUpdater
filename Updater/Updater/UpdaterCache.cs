@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Updater.Storage;
 
 namespace Updater
 {
     public class UpdaterCache : IUpdaterCache
     {
-        public IUpdaterCacheStorageProvider StorageProvider { get; private set; }
+        public ICacheStorageProvider StorageProvider { get; private set; }
 
-        public UpdaterCache(IUpdaterCacheStorageProvider storageProvider) {
+        public UpdaterCache(ICacheStorageProvider storageProvider) {
             this.StorageProvider = storageProvider;
         }
 

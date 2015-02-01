@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Updater.Storage;
 
 namespace Updater.Desktop
 {
-    public class UpdaterCacheStorageProvider : IUpdaterCacheStorageProvider
+    public class CacheStorageProvider : ICacheStorageProvider
     {
         private readonly string InstalledPackageFile = "InstalledPackages.xml";
 
@@ -17,7 +18,7 @@ namespace Updater.Desktop
 
         bool disposed = false;
 
-        public UpdaterCacheStorageProvider(string cacheDirectory) {
+        public CacheStorageProvider(string cacheDirectory) {
             this.CacheDirectory = cacheDirectory;
 
             if (Directory.Exists(this.CacheDirectory) == false) {

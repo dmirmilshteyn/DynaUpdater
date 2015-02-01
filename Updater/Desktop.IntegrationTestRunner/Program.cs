@@ -11,6 +11,7 @@ using System.Xml;
 using Updater.Desktop;
 using Updater.Installation;
 using Updater.Installation.Instructions;
+using Updater.Storage;
 
 namespace Updater.IntegrationTestRunner
 {
@@ -34,7 +35,7 @@ namespace Updater.IntegrationTestRunner
             // Setup the test environment
             Directory.CreateDirectory(baseDirectory);
 
-            using (IUpdaterCacheStorageProvider storageProvider = new UpdaterCacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
+            using (ICacheStorageProvider storageProvider = new CacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
                 IPackageAcquisitionFactory packageAcquisitionFactory = new PackageAcquisitionFactory();
                 IUpdaterCache updaterCache = new UpdaterCache(storageProvider);
 
