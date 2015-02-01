@@ -5,11 +5,13 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{10121971-27AC-4896-98AD-2E5D4C5171EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.IntegrationTestRunner", "Updater.IntegrationTestRunner\Updater.IntegrationTestRunner.csproj", "{B2DB7B87-4E63-4DCC-A446-58AF1B45C8AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop.IntegrationTestRunner", "Desktop.IntegrationTestRunner\Desktop.IntegrationTestRunner.csproj", "{B2DB7B87-4E63-4DCC-A446-58AF1B45C8AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.Android", "Android\Updater.Android.csproj", "{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.Desktop", "Desktop\Updater.Desktop.csproj", "{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Android.IntegrationTestRunner", "Android.IntegrationTestRunner\Android.IntegrationTestRunner.csproj", "{46087947-BA74-41B0-84FE-30B48E2C4622}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,12 +28,17 @@ Global
 		{B2DB7B87-4E63-4DCC-A446-58AF1B45C8AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2DB7B87-4E63-4DCC-A446-58AF1B45C8AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E96AD49-3EC2-44A2-BC91-40E3B6CD0EE3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0A2E83E-602D-428B-BFAC-DC7EF642FA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46087947-BA74-41B0-84FE-30B48E2C4622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46087947-BA74-41B0-84FE-30B48E2C4622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46087947-BA74-41B0-84FE-30B48E2C4622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46087947-BA74-41B0-84FE-30B48E2C4622}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
