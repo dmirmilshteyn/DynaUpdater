@@ -11,5 +11,7 @@ namespace Updater
     {
         ICacheStorageProvider StorageProvider { get; }
         IInstalledPackageMetadataCollection InstalledPackages { get; }
+
+        void MarkPackageAsInstalled(IPackageMetadata packageMetadata);
     }
 }

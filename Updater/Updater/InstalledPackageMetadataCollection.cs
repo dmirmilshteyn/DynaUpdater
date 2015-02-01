@@ -35,5 +35,26 @@ namespace Updater
 
             return installedMetadataCollection;
         }
+
+        public void Save(XmlWriter xmlWriter) {
+            xmlWriter.WriteStartDocument();
+            xmlWriter.WriteStartElement("Packages");
+
+            foreach (IInstalledPackageMetadata metadata in this.Values) {
+                xmlWriter.WriteStartElement("Package");
+
+                xmlWriter.WriteAttributeString("Id", metadata.Id.ToString());
+                xmlWriter.WriteAttributeString("Name", metadata.Name);
+                xmlWriter.WriteAttributeString("Hash", metadata.Hash);
+                xmlWriter.WriteAttributeString("Size", metadata.Size.ToString());
+                xmlWriter.WriteAttributeString("PublishDate", metadata.PublishDate.ToBinary().ToString());
+                xmlWriter.WriteAttributeString("InstallDate", metadata.InstallDate.ToBinary().ToString());
+
+                xmlWriter.WriteEndElement();
+            }
+
+            xmlWriter.WriteEndElement();
+            xmlWriter.WriteEndDocument();
+        }
     }
 }

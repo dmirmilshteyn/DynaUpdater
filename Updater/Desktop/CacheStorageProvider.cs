@@ -32,7 +32,7 @@ namespace Updater.Desktop
             }
         }
 
-        public XmlReader GetInstalledPackageMetadataReader() {
+        public XmlReader OpenInstalledPackageRepository() {
             string path = Path.Combine(CacheDirectory, InstalledPackageFile);
 
             if (File.Exists(path) == false) {
@@ -40,6 +40,18 @@ namespace Updater.Desktop
             }
 
             return XmlReader.Create(path);
+        }
+
+        public XmlWriter CreateInstalledPackageRepository() {
+            string path = Path.Combine(this.CacheDirectory, InstalledPackageFile);
+
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings()
+            {
+                Indent = true,
+                IndentChars = "\t"
+            };
+
+            return XmlWriter.Create(path, xmlWriterSettings);
         }
 
         private void CreateEmptyInstalledPackageMetadataFile(string path) {
@@ -87,5 +99,7 @@ namespace Updater.Desktop
                 disposed = true;
             }
         }
+
+
     }
 }

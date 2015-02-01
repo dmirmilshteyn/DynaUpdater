@@ -29,11 +29,11 @@ namespace Updater.IntegrationTestRunner
             string baseDirectory = Path.GetFullPath("Testing");
 
             // Clean the old test environment if it already exist
-            if (Directory.Exists(baseDirectory)) {
+            /*if (Directory.Exists(baseDirectory)) {
                 Directory.Delete(baseDirectory, true);
             }
             // Setup the test environment
-            Directory.CreateDirectory(baseDirectory);
+            Directory.CreateDirectory(baseDirectory);*/
 
             IStorageProvider storageProvider = new StorageProvider(baseDirectory);
             using (ICacheStorageProvider cacheStorageProvider = new CacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
@@ -54,6 +54,7 @@ namespace Updater.IntegrationTestRunner
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
                         using (IPackage package = Package.OpenPackage(packageMetadata, packageArchive)) {
                             packageInstaller.Install(storageProvider, package);
+                            updaterCache.MarkPackageAsInstalled(package.Metadata);
                         }
                     }
                 }
