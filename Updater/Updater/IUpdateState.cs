@@ -8,5 +8,6 @@ namespace Updater
 {
     public interface IUpdateState
     {
+        IInstalledPackageMetadataCollection InstalledPackages { get; }
     }
 }

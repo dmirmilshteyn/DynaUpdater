@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Updater
 {
@@ -14,8 +15,31 @@ namespace Updater
             this.StorageProvider = storageProvider;
         }
 
-        public IPackageMetadataCollection LoadMetadataCollection() {
-            throw new NotImplementedException();
+        public IInstalledPackageMetadataCollection LoadInstalledMetadataCollection() {
+            IInstalledPackageMetadataCollection installedMetadataCollection = new InstalledPackageMetadataCollection();
+
+            using (XmlReader xmlReader = StorageProvider.GetInstalledPackageMetadataReader()) {
+                while (xmlReader.Read()) {
+                    if (xmlReader.IsStartElement()) {
+                        switch (xmlReader.Name) {
+                            case "Package": {
+                                    // Package metadata is stored as attributes
+                                    string name = xmlReader.GetAttribute("Name");
+                                    string hash = xmlReader.GetAttribute("Hash");
+                                    long size = Convert.ToInt64(xmlReader.GetAttribute("Size"));
+                                    DateTime modifiedDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("ModifiedDate")));
+                                    DateTime installDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("InstallDate")));
+
+                                    IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(name, hash, size, modifiedDate, installDate);
+                                    installedMetadataCollection.Add(packageMetadata);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
+            return installedMetadataCollection;
         }
     }
 }

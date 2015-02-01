@@ -16,6 +16,10 @@ namespace Updater.Desktop
 
         public UpdaterCacheStorageProvider(string cacheDirectory) {
             this.CacheDirectory = cacheDirectory;
+
+            if (Directory.Exists(this.CacheDirectory) == false) {
+                Directory.CreateDirectory(this.CacheDirectory);
+            }
         }
 
         public XmlReader GetInstalledPackageMetadataReader() {

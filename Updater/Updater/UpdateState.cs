@@ -8,5 +8,10 @@ namespace Updater
 {
     public class UpdateState : IUpdateState
     {
+        public IInstalledPackageMetadataCollection InstalledPackages { get; private set; }
+
+        public UpdateState(IInstalledPackageMetadataCollection installedPackages) {
+            this.InstalledPackages = installedPackages;
+        }
     }
 }

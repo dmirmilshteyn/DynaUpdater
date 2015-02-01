@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="IInstalledPackageMetadata.cs" />
     <Compile Include="IInstalledPackageMetadataCollection.cs" />
+    <Compile Include="InstalledPackageMetadata.cs" />
     <Compile Include="InstalledPackageMetadataCollection.cs" />
     <Compile Include="IPackage.cs" />
     <Compile Include="IPackageFactory.cs" />

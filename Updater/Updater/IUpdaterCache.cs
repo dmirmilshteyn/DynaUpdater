@@ -10,6 +10,6 @@ namespace Updater
     {
         IUpdaterCacheStorageProvider StorageProvider { get; }
 
-        IPackageMetadataCollection LoadMetadataCollection();
+        IInstalledPackageMetadataCollection LoadInstalledMetadataCollection();
     }
 }

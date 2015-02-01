@@ -35,8 +35,6 @@ namespace Updater
             return metadataCollection;
         }
 
-
-
         public IUpdateState DetermineUpdateState(XmlReader metadataReader) {
             throw new NotImplementedException();
         }
