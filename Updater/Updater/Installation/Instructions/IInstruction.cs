@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Updater.Storage;
 
 namespace Updater.Installation.Instructions
 {
@@ -10,6 +11,6 @@ namespace Updater.Installation.Instructions
     {
         InstructionType Type { get; }
 
-        void Execute(IPackage package);
+        void Execute(IStorageProvider storageProvider, IPackage package);
     }
 }

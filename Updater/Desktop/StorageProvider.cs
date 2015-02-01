@@ -17,7 +17,14 @@ namespace Updater.Desktop
         }
 
         public Stream CreateFile(string relativePath) {
-            return new FileStream(Path.Combine(this.storageDirectory, relativePath), FileMode.Create);
+            string fullPath = Path.Combine(this.storageDirectory, relativePath);
+            string targetDirectory = Path.GetDirectoryName(fullPath);
+
+            if (Directory.Exists(targetDirectory) == false) {
+                Directory.CreateDirectory(targetDirectory);
+            }
+
+            return new FileStream(fullPath, FileMode.Create);
         }
 
         public Stream OpenFile(string relativePath) {

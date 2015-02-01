@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Updater.Storage;
 
 namespace Updater.Installation.Instructions
 {
@@ -26,10 +28,16 @@ namespace Updater.Installation.Instructions
             this.inputRegex = new Regex(RegexHelper.TranslateWildcards(this.InputPattern), RegexOptions.IgnoreCase);
         }
 
-        public void Execute(IPackage package) {
+        public void Execute(IStorageProvider storageProvider, IPackage package) {
             foreach (ZipArchiveEntry entry in package.Archive.Entries) {
                 if (inputRegex.IsMatch(entry.FullName)) {
                     string destinationPath = this.TargetPattern.Replace("$(FileName)", entry.Name);
+
+                    using (Stream entryStream = entry.Open()) {
+                        using (Stream fileStream = storageProvider.CreateFile(destinationPath)) {
+                            entryStream.CopyTo(fileStream);
+                        }
+                    }
                 }
             }
         }

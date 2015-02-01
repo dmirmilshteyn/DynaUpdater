@@ -35,9 +35,10 @@ namespace Updater.IntegrationTestRunner
             // Setup the test environment
             Directory.CreateDirectory(baseDirectory);
 
-            using (ICacheStorageProvider storageProvider = new CacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
+            IStorageProvider storageProvider = new StorageProvider(baseDirectory);
+            using (ICacheStorageProvider cacheStorageProvider = new CacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
                 IPackageAcquisitionFactory packageAcquisitionFactory = new PackageAcquisitionFactory();
-                IUpdaterCache updaterCache = new UpdaterCache(storageProvider);
+                IUpdaterCache updaterCache = new UpdaterCache(cacheStorageProvider);
 
                 IInstalledPackageMetadataCollection installedPackageMetadataCollection = updaterCache.LoadInstalledMetadataCollection();
                 IPackageMetadataCollection packageMetadataCollection = null;
@@ -50,10 +51,10 @@ namespace Updater.IntegrationTestRunner
                 IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
                 IPackageInstaller packageInstaller = updater.CreateInstaller();
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
-                    IPackageAcquisition packageAcquisition = packageAcquisitionFactory.BuildPackageAcquisition(remotePackageStorageDirectory, storageProvider);
+                    IPackageAcquisition packageAcquisition = packageAcquisitionFactory.BuildPackageAcquisition(remotePackageStorageDirectory, cacheStorageProvider);
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
                         using (IPackage package = Package.OpenPackage(packageMetadata, packageArchive)) {
-                            packageInstaller.Install(package);
+                            packageInstaller.Install(storageProvider, package);
                         }
                     }
                 }
