@@ -44,6 +44,7 @@
     <Compile Include="IPackageAcquisition.cs" />
     <Compile Include="Installation\Instructions\IInstruction.cs" />
     <Compile Include="Installation\Instructions\IInstructionCollection.cs" />
+    <Compile Include="IPackageAcquisitionFactory.cs" />
     <Compile Include="IPackageMetadataCollection.cs" />
     <Compile Include="InstalledPackageMetadata.cs" />
     <Compile Include="IUpdateInstaller.cs" />

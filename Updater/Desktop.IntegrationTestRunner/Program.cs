@@ -34,6 +34,7 @@ namespace Updater.IntegrationTestRunner
             Directory.CreateDirectory(baseDirectory);
 
             using (IUpdaterCacheStorageProvider storageProvider = new UpdaterCacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
+                IPackageAcquisitionFactory packageAcquisitionFactory = new PackageAcquisitionFactory();
                 IUpdaterCache updaterCache = new UpdaterCache(storageProvider);
 
                 IInstalledPackageMetadataCollection installedPackageMetadataCollection = updaterCache.LoadInstalledMetadataCollection();
@@ -47,7 +48,7 @@ namespace Updater.IntegrationTestRunner
                 IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
                 IUpdateInstaller updateInstaller = updater.CreateInstaller();
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
-                    IPackageAcquisition packageAcquisition = new PackageAcquisition(remotePackageStorageDirectory, storageProvider);
+                    IPackageAcquisition packageAcquisition = packageAcquisitionFactory.BuildPackageAcquisition(remotePackageStorageDirectory, storageProvider);
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
                         ZipArchiveEntry installationInstructionsEntry = packageArchive.Entries.First((archiveEntry) => { return (archiveEntry.FullName == "Installation.xml"); });
                         using (Stream installationInstructionsStream = installationInstructionsEntry.Open()) {
