@@ -8,6 +8,7 @@ namespace Updater.PackageAssembler
 {
     public static class Program
     {
+        // TODO: Finish automated package assembly. Is incomplete for the demo - unneccesary for now...
         public static void Main(string[] args) {
             Options options = new Options();
             if (CommandLine.Parser.Default.ParseArguments(args, options)) {
