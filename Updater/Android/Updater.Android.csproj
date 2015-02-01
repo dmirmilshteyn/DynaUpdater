@@ -42,10 +42,16 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StorageProvider.cs" />
+    <Compile Include="PackageAcquisitionFactory.cs" />
+    <Compile Include="PackageAcquisition.cs" />
+    <Compile Include="CacheStorageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -61,4 +67,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\Updater\Updater.csproj">
+      <Project>{10121971-27AC-4896-98AD-2E5D4C5171EE}</Project>
+      <Name>Updater</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
