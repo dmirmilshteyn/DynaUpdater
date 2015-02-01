@@ -25,8 +25,10 @@ namespace Updater
                                 string hash = metadataReader.GetAttribute("Hash");
                                 long size = Convert.ToInt64(metadataReader.GetAttribute("Size"));
                                 DateTime publishDate = DateTime.FromBinary(Convert.ToInt64(metadataReader.GetAttribute("PublishDate")));
+                                // Source is optional. If it is not specified, it will be auto-generated based on conventions
+                                string source = metadataReader.GetAttribute("Source");
 
-                                IPackageMetadata packageMetadata = new PackageMetadata(id, name, hash, size, publishDate);
+                                IPackageMetadata packageMetadata = new PackageMetadata(id, name, hash, size, publishDate, source);
                                 metadataCollection.Add(id, packageMetadata);
                             }
                             break;

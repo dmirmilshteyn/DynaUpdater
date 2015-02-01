@@ -32,10 +32,9 @@ namespace Updater
                 // The package has previously been intalled - remove the data from the collection
                 // The entry will be recreated later on with the updated value
                 InstalledPackages.Remove(packageMetadata.Id);
-
             }
 
-            IInstalledPackageMetadata installedMetadata = new InstalledPackageMetadata(packageMetadata.Id, packageMetadata.Name, packageMetadata.Hash, packageMetadata.Size, packageMetadata.PublishDate, DateTime.UtcNow);
+            IInstalledPackageMetadata installedMetadata = new InstalledPackageMetadata(packageMetadata.Id, packageMetadata.Name, packageMetadata.Hash, packageMetadata.Size, packageMetadata.PublishDate, packageMetadata.Source, DateTime.UtcNow);
             InstalledPackages.Add(installedMetadata.Id, installedMetadata);
 
             using (XmlWriter xmlWriter = StorageProvider.CreateInstalledPackageRepository()) {

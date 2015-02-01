@@ -26,10 +26,16 @@ namespace Updater.Desktop
 
         public async Task<ZipArchive> AcquirePackageArchive(IPackageMetadata packageMetadata) {
             using (HttpClient httpClient = new HttpClient()) {
-                Uri targetUri = new Uri(remotePackageStorageDirectory, packageMetadata.Id + ".zip");
-                using (Stream packageStream = await httpClient.GetStreamAsync(new Uri(remotePackageStorageDirectory, packageMetadata.Id + ".zip"))) {
+                Uri targetUri;
+                if (string.IsNullOrEmpty(packageMetadata.Source)) {
+                    targetUri = new Uri(remotePackageStorageDirectory, packageMetadata.Id + ".zip");
+                } else {
+                    targetUri = new Uri(packageMetadata.Source);
+                }
+
+                using (Stream packageStream = await httpClient.GetStreamAsync(targetUri)) {
                     // Intentionally left open - will be closed by the caller
-                    Stream temporaryFileStream = storageProvider.CreateTemporaryFile(packageMetadata.Id + ".zip.temp");
+                    Stream temporaryFileStream = storageProvider.CreateTemporaryFile(packageMetadata.Id + ".temp");
                     long length = packageMetadata.Size;
 
                     IProgress<long> progress = new Progress<long>((totalBytesRead) =>

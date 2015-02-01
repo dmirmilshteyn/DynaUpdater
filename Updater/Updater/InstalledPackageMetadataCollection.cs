@@ -24,8 +24,10 @@ namespace Updater
                                 long size = Convert.ToInt64(xmlReader.GetAttribute("Size"));
                                 DateTime publishDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("PublishDate")));
                                 DateTime installDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("InstallDate")));
+                                // Source is optional. If it is not specified, it will be auto-generated based on conventions
+                                string source = xmlReader.GetAttribute("Source");
 
-                                IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(id, name, hash, size, publishDate, installDate);
+                                IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(id, name, hash, size, publishDate, source, installDate);
                                 installedMetadataCollection.Add(id, packageMetadata);
                             }
                             break;
