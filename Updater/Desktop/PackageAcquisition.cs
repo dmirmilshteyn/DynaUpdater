@@ -41,7 +41,12 @@ namespace Updater.Desktop
                     IProgress<long> progress = new Progress<long>((totalBytesRead) =>
                     {
                         // Calculate percentage
-                        int percent = (int)(totalBytesRead / length);
+                        int percent;
+                        if (length > 0) {
+                            percent = (int)(totalBytesRead / length);
+                        } else {
+                            percent = 0;
+                        }
 
                         // Report the download update
                         if (AcquisitionUpdate != null) {
