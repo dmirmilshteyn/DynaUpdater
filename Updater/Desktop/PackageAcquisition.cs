@@ -25,7 +25,7 @@ namespace Updater.Desktop
         }
 
         public async Task<ZipArchive> AcquirePackageArchive(IPackageMetadata packageMetadata) {
-            using (HttpClient httpClient = new HttpClient()) {
+            using (WebClient webClient = new WebClient()) {
                 Uri targetUri;
                 if (string.IsNullOrEmpty(packageMetadata.Source)) {
                     targetUri = new Uri(remotePackageStorageDirectory, packageMetadata.Id + ".zip");
@@ -33,7 +33,7 @@ namespace Updater.Desktop
                     targetUri = new Uri(packageMetadata.Source);
                 }
 
-                using (Stream packageStream = await httpClient.GetStreamAsync(targetUri)) {
+                using (Stream packageStream = webClient.OpenRead(targetUri)) {
                     // Intentionally left open - will be closed by the caller
                     Stream temporaryFileStream = storageProvider.CreateTemporaryFile(packageMetadata.Id + ".temp");
                     long length = packageMetadata.Size;
@@ -60,10 +60,6 @@ namespace Updater.Desktop
                     return new ZipArchive(temporaryFileStream);
                 }
             }
-        }
-
-        private void ReportProgress(int percent) {
-
         }
 
         private void CopyStreams(Stream inputStream, Stream outputStream, IProgress<long> progress) {
