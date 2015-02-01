@@ -12,16 +12,29 @@ namespace Updater
 {
     public class Package : IPackage
     {
+        private readonly string[] IgnoredFiles = { "Installation.xml" };
+
         public IPackageMetadata Metadata { get; private set; }
-        public ZipArchive Archive { get; private set; }
         public IInstructionCollection Instructions { get; private set; }
 
+        public IEnumerable<ZipArchiveEntry> Entries {
+            get {
+                foreach (ZipArchiveEntry entry in this.archive.Entries) {
+                    if (IgnoredFiles.Contains(entry.FullName) == false) {
+                        yield return entry;
+                    }
+                }
+            }
+        }
+
         bool disposed = false;
+        ZipArchive archive;
 
         private Package(IPackageMetadata metadata, ZipArchive archive, IInstructionCollection instructions) {
             this.Metadata = metadata;
-            this.Archive = archive;
             this.Instructions = instructions;
+
+            this.archive = archive;
         }
 
         public static Package OpenPackage(IPackageMetadata metadata, ZipArchive archive) {
@@ -42,7 +55,7 @@ namespace Updater
         private void Dispose(bool disposing) {
             if (!disposed) {
                 if (disposing) {
-                    this.Archive.Dispose();
+                    this.archive.Dispose();
                 }
 
                 disposed = true;

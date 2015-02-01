@@ -11,7 +11,8 @@ namespace Updater
     public interface IPackage : IDisposable
     {
         IPackageMetadata Metadata { get; }
-        ZipArchive Archive { get; }
         IInstructionCollection Instructions { get; }
+
+        IEnumerable<ZipArchiveEntry> Entries { get; }
     }
 }

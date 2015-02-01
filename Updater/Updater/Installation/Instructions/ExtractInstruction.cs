@@ -29,7 +29,7 @@ namespace Updater.Installation.Instructions
         }
 
         public void Execute(IStorageProvider storageProvider, IPackage package) {
-            foreach (ZipArchiveEntry entry in package.Archive.Entries) {
+            foreach (ZipArchiveEntry entry in package.Entries) {
                 if (inputRegex.IsMatch(entry.FullName)) {
                     string destinationPath = this.TargetPattern.Replace("$(FileName)", entry.Name);
 
