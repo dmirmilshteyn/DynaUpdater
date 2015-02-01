@@ -46,6 +46,7 @@
     <Compile Include="PackageAcquisitionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CacheStorageProvider.cs" />
+    <Compile Include="StorageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Updater\Updater.csproj">
