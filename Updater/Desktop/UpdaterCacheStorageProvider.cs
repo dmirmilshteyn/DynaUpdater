@@ -14,11 +14,19 @@ namespace Updater.Desktop
 
         public string CacheDirectory { get; private set; }
 
+        public string TemporaryDirectory { get; private set; }
+
         public UpdaterCacheStorageProvider(string cacheDirectory) {
             this.CacheDirectory = cacheDirectory;
 
             if (Directory.Exists(this.CacheDirectory) == false) {
                 Directory.CreateDirectory(this.CacheDirectory);
+            }
+
+            // Create the temporary directory
+            this.TemporaryDirectory = Path.Combine(this.CacheDirectory, "Temp");
+            if (Directory.Exists(this.TemporaryDirectory) == false) {
+                Directory.CreateDirectory(this.TemporaryDirectory);
             }
         }
 
@@ -45,6 +53,29 @@ namespace Updater.Desktop
 
                 xmlWriter.WriteEndElement();
                 xmlWriter.WriteEndDocument();
+            }
+        }
+
+        public void StoreTemporaryFile(string fileName, Stream inputStream) {
+            using (FileStream fileStream = new FileStream(Path.Combine(this.TemporaryDirectory, fileName), FileMode.CreateNew)) {
+                inputStream.CopyTo(fileStream);
+            }
+        }
+
+        public void RemoveTemporaryFiles() {
+            if (Directory.Exists(this.TemporaryDirectory)) {
+                Directory.Delete(this.TemporaryDirectory, true);
+            }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposing) {
+                RemoveTemporaryFiles();
             }
         }
     }
