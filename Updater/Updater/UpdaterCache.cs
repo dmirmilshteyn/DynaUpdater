@@ -11,37 +11,22 @@ namespace Updater
     public class UpdaterCache : IUpdaterCache
     {
         public ICacheStorageProvider StorageProvider { get; private set; }
+        public IInstalledPackageMetadataCollection InstalledPackages { get; private set; }
 
-        public UpdaterCache(ICacheStorageProvider storageProvider) {
+        private UpdaterCache(ICacheStorageProvider storageProvider, IInstalledPackageMetadataCollection installedMetadataCollection) {
             this.StorageProvider = storageProvider;
+            this.InstalledPackages = installedMetadataCollection;
         }
 
-        public IInstalledPackageMetadataCollection LoadInstalledMetadataCollection() {
-            IInstalledPackageMetadataCollection installedMetadataCollection = new InstalledPackageMetadataCollection();
-
-            using (XmlReader xmlReader = StorageProvider.GetInstalledPackageMetadataReader()) {
-                while (xmlReader.Read()) {
-                    if (xmlReader.IsStartElement()) {
-                        switch (xmlReader.Name) {
-                            case "Package": {
-                                    // Package metadata is stored as attributes
-                                    int id = Convert.ToInt32(xmlReader.GetAttribute("Id"));
-                                    string name = xmlReader.GetAttribute("Name");
-                                    string hash = xmlReader.GetAttribute("Hash");
-                                    long size = Convert.ToInt64(xmlReader.GetAttribute("Size"));
-                                    DateTime publishDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("PublishDate")));
-                                    DateTime installDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("InstallDate")));
-
-                                    IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(id, name, hash, size, publishDate, installDate);
-                                    installedMetadataCollection.Add(id, packageMetadata);
-                                }
-                                break;
-                        }
-                    }
-                }
+        public static UpdaterCache InitializeCache(ICacheStorageProvider cacheStorageProvider) {
+            IInstalledPackageMetadataCollection installedPackages;
+            using (XmlReader xmlReader = cacheStorageProvider.GetInstalledPackageMetadataReader()) {
+                installedPackages = InstalledPackageMetadataCollection.LoadFromXml(xmlReader);
             }
 
-            return installedMetadataCollection;
+            return new UpdaterCache(cacheStorageProvider, installedPackages);
         }
+
+
     }
 }

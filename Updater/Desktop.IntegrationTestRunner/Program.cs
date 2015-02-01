@@ -38,9 +38,8 @@ namespace Updater.IntegrationTestRunner
             IStorageProvider storageProvider = new StorageProvider(baseDirectory);
             using (ICacheStorageProvider cacheStorageProvider = new CacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
                 IPackageAcquisitionFactory packageAcquisitionFactory = new PackageAcquisitionFactory();
-                IUpdaterCache updaterCache = new UpdaterCache(cacheStorageProvider);
+                IUpdaterCache updaterCache = UpdaterCache.InitializeCache(cacheStorageProvider);
 
-                IInstalledPackageMetadataCollection installedPackageMetadataCollection = updaterCache.LoadInstalledMetadataCollection();
                 IPackageMetadataCollection packageMetadataCollection = null;
 
                 IUpdater updater = new Updater();
@@ -48,7 +47,7 @@ namespace Updater.IntegrationTestRunner
                     packageMetadataCollection = updater.ParseMetadataCollectionXml(xmlReader);
                 }
 
-                IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
+                IUpdateState updateState = updater.DetermineUpdateState(updaterCache.InstalledPackages, packageMetadataCollection);
                 IPackageInstaller packageInstaller = updater.CreateInstaller();
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
                     IPackageAcquisition packageAcquisition = packageAcquisitionFactory.BuildPackageAcquisition(remotePackageStorageDirectory, cacheStorageProvider);

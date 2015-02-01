@@ -10,7 +10,6 @@ namespace Updater
     public interface IUpdaterCache
     {
         ICacheStorageProvider StorageProvider { get; }
-
-        IInstalledPackageMetadataCollection LoadInstalledMetadataCollection();
+        IInstalledPackageMetadataCollection InstalledPackages { get; }
     }
 }
