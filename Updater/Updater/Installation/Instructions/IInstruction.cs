@@ -10,6 +10,6 @@ namespace Updater.Installation.Instructions
     {
         InstructionType Type { get; }
 
-        void Execute();
+        void Execute(IPackage package);
     }
 }

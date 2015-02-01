@@ -47,12 +47,12 @@ namespace Updater.IntegrationTestRunner
                 }
 
                 IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
-                IPackageInstaller updateInstaller = updater.CreateInstaller();
+                IPackageInstaller packageInstaller = updater.CreateInstaller();
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
                     IPackageAcquisition packageAcquisition = packageAcquisitionFactory.BuildPackageAcquisition(remotePackageStorageDirectory, storageProvider);
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
                         using (IPackage package = Package.OpenPackage(packageMetadata, packageArchive)) {
-
+                            packageInstaller.Install(package);
                         }
                     }
                 }

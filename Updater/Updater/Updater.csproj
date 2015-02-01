@@ -65,6 +65,7 @@
     <Compile Include="PackageMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Installation\PackageInstaller.cs" />
+    <Compile Include="RegexHelper.cs" />
     <Compile Include="Updater.cs" />
     <Compile Include="UpdaterCache.cs" />
     <Compile Include="UpdateState.cs" />
