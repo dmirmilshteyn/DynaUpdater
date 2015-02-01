@@ -51,7 +51,7 @@ namespace Updater.Android
 							});
 
 					// Async file download
-					await Task.Run(() => CopyStreams(packageStream, temporaryFileStream, progress));
+					CopyStreams(packageStream, temporaryFileStream, progress);
 
 					return new ZipArchive(temporaryFileStream);
 				}
