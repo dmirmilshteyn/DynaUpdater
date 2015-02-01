@@ -14,13 +14,15 @@ using System.Xml;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using Updater.Installation;
+using Android.Graphics;
 
 namespace Android.IntegrationTestRunner
 {
 	[Activity(Label = "Android.IntegrationTestRunner", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity
 	{
-		int count = 1;
+		ImageView displayImage;
+		string baseDirectory;
 
 		protected override void OnCreate(Bundle bundle) {
 			base.OnCreate(bundle);
@@ -28,27 +30,22 @@ namespace Android.IntegrationTestRunner
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
 
+			this.baseDirectory = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "Updater");
+
 			// Get our button from the layout resource,
 			// and attach an event to it
-			Button button = FindViewById<Button>(Resource.Id.myButton);
-			
-			button.Click += delegate {
+			Button performUpdateButton = FindViewById<Button>(Resource.Id.performUpdate);
+			performUpdateButton.Click += delegate {
 				Task updaterTask = HandleUpdater();
 				updaterTask.Wait();
 
-				button.Text = "Updated!";
+				performUpdateButton.Text = "Updated!";
+
+				RefreshDisplayImage();
 			};
-		}
 
-		private async Task HandleUpdater() { 
-			try {
-				string updateSiteString = "??";
-
-				Uri updateSite = new Uri(updateSiteString);
-				Uri remotePackageStorageDirectory = new Uri(updateSite, "Packages/");
-
-				string baseDirectory = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "Updater");
-
+			Button clearCacheButton = FindViewById<Button>(Resource.Id.clearCache);
+			clearCacheButton.Click += delegate {
 				// Clean the old test environment if it already exist
 				if (Directory.Exists(baseDirectory)) {
 					Directory.Delete(baseDirectory, true);
@@ -56,8 +53,38 @@ namespace Android.IntegrationTestRunner
 				// Setup the test environment
 				Directory.CreateDirectory(baseDirectory);
 
+				RefreshDisplayImage();
+				performUpdateButton.Text = "Perform Update";
+			};
+
+			displayImage = FindViewById<ImageView>(Resource.Id.imageView);
+		}
+
+		private void RefreshDisplayImage() {
+			string imagePath = System.IO.Path.Combine(baseDirectory, "Image.png");
+
+			if (File.Exists(imagePath)) {
+				Java.IO.File file = new Java.IO.File(imagePath);
+				Bitmap bitmap = BitmapFactory.DecodeFile(file.AbsolutePath);
+				displayImage.SetImageBitmap(bitmap);
+			} else {
+				displayImage.SetImageBitmap(null);
+			}
+		}
+
+		private async Task HandleUpdater() { 
+			try {
+				string updateSiteString = "https://onedrive.live.com/download?resid=D332F531B200D073%218103";
+
+				Uri updateSite = new Uri(updateSiteString);
+				Uri remotePackageStorageDirectory = new Uri(updateSite, "Packages/");
+
+				if (Directory.Exists(baseDirectory) == false) {
+					Directory.CreateDirectory(baseDirectory);
+				}
+
 				IStorageProvider storageProvider = new StorageProvider(baseDirectory);
-				using (ICacheStorageProvider cacheStorageProvider = new CacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
+				using (ICacheStorageProvider cacheStorageProvider = new CacheStorageProvider(System.IO.Path.Combine(baseDirectory, "Cache"))) {
 					IPackageAcquisitionFactory packageAcquisitionFactory = new PackageAcquisitionFactory();
 					IUpdaterCache updaterCache = UpdaterCache.InitializeCache(cacheStorageProvider);
 
@@ -81,9 +108,9 @@ namespace Android.IntegrationTestRunner
 					}
 				}
 			} catch (Exception ex) {
-				string baseDirectory = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "Updater");
+				string baseDirectory = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "Updater");
 
-				File.WriteAllText(Path.Combine(baseDirectory, "error.txt"), ex.ToString());
+				File.WriteAllText(System.IO.Path.Combine(baseDirectory, "error.txt"), ex.ToString());
 			}
 		}
 	}
