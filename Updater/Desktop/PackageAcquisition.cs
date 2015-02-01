@@ -32,7 +32,7 @@ namespace Updater.Desktop
                     Stream temporaryFileStream = storageProvider.CreateTemporaryFile(packageMetadata.Id + ".zip.temp");
                     long length = packageMetadata.Size;
 
-                    Progress<long> progress = new Progress<long>((totalBytesRead) =>
+                    IProgress<long> progress = new Progress<long>((totalBytesRead) =>
                     {
                         // Calculate percentage
                         int percent = (int)(totalBytesRead / length);
@@ -55,7 +55,7 @@ namespace Updater.Desktop
 
         }
 
-        private void CopyStreams(Stream inputStream, Stream outputStream, Progress<long> progress) {
+        private void CopyStreams(Stream inputStream, Stream outputStream, IProgress<long> progress) {
             byte[] downloadBuffer = new byte[4096];
             int bytesRead = 0;
             int totalBytesRead = 0;
@@ -63,6 +63,7 @@ namespace Updater.Desktop
                 outputStream.Write(downloadBuffer, 0, bytesRead);
 
                 totalBytesRead += bytesRead;
+                progress.Report(totalBytesRead);
             }
         }
     }
