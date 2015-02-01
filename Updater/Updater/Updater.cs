@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Updater.Installation;
 
 namespace Updater
 {
@@ -62,8 +63,8 @@ namespace Updater
             return new UpdateState(outdatedPackages);
         }
 
-        public IUpdateInstaller CreateInstaller() {
-            return new UpdateInstaller();
+        public IPackageInstaller CreateInstaller() {
+            return new PackageInstaller();
         }
     }
 }

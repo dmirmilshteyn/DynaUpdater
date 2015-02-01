@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Updater.Desktop;
+using Updater.Installation;
 using Updater.Installation.Instructions;
 
 namespace Updater.IntegrationTestRunner
@@ -46,7 +47,7 @@ namespace Updater.IntegrationTestRunner
                 }
 
                 IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
-                IUpdateInstaller updateInstaller = updater.CreateInstaller();
+                IPackageInstaller updateInstaller = updater.CreateInstaller();
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
                     IPackageAcquisition packageAcquisition = packageAcquisitionFactory.BuildPackageAcquisition(remotePackageStorageDirectory, storageProvider);
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {

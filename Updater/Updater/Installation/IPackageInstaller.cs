@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Updater
+namespace Updater.Installation
 {
-    public interface IUpdateInstaller
+    public interface IPackageInstaller
     {
-        void Install(IPackageMetadata packageMetadata);
+        void Install(IPackage package);
     }
 }

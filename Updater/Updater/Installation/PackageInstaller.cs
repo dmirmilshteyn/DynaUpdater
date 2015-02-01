@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Updater
+namespace Updater.Installation
 {
-    public class UpdateInstaller : IUpdateInstaller
+    public class PackageInstaller : IPackageInstaller
     {
-        public void Install(IPackageMetadata package) {
+        public void Install(IPackage package) {
             throw new NotImplementedException();
         }
     }

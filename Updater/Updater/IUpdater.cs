@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Updater.Installation;
 
 namespace Updater
 {
@@ -12,6 +13,6 @@ namespace Updater
     {
         IPackageMetadataCollection ParseMetadataCollectionXml(XmlReader metadataReader);
         IUpdateState DetermineUpdateState(IInstalledPackageMetadataCollection installedPackages, IPackageMetadataCollection remotePackages);
-        IUpdateInstaller CreateInstaller();
+        IPackageInstaller CreateInstaller();
     }
 }
