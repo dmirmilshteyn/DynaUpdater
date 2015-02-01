@@ -11,6 +11,6 @@ namespace Updater
     public interface IUpdater
     {
         IPackageMetadataCollection ParseMetadataCollectionXml(XmlReader metadataReader);
-        IUpdateState DetermineUpdateState(XmlReader metadataReader);
+        IUpdateState DetermineUpdateState(IInstalledPackageMetadataCollection installedPackages, IPackageMetadataCollection remotePackages);
     }
 }

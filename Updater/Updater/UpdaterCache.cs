@@ -24,13 +24,14 @@ namespace Updater
                         switch (xmlReader.Name) {
                             case "Package": {
                                     // Package metadata is stored as attributes
+                                    int id = Convert.ToInt32(xmlReader.GetAttribute("Id"));
                                     string name = xmlReader.GetAttribute("Name");
                                     string hash = xmlReader.GetAttribute("Hash");
                                     long size = Convert.ToInt64(xmlReader.GetAttribute("Size"));
                                     DateTime modifiedDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("ModifiedDate")));
                                     DateTime installDate = DateTime.FromBinary(Convert.ToInt64(xmlReader.GetAttribute("InstallDate")));
 
-                                    IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(name, hash, size, modifiedDate, installDate);
+                                    IInstalledPackageMetadata packageMetadata = new InstalledPackageMetadata(id, name, hash, size, modifiedDate, installDate);
                                     installedMetadataCollection.Add(packageMetadata);
                                 }
                                 break;

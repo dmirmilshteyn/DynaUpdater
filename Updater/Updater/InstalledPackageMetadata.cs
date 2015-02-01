@@ -10,8 +10,8 @@ namespace Updater
     {
         public DateTime InstallDate { get; private set; }
 
-        public InstalledPackageMetadata(string name, string hash, long size, DateTime modifiedDate, DateTime installDate)
-            : base(name, hash, size, modifiedDate) {
+        public InstalledPackageMetadata(int id, string name, string hash, long size, DateTime modifiedDate, DateTime installDate)
+            : base(id, name, hash, size, modifiedDate) {
             this.InstallDate = installDate;
         }
     }

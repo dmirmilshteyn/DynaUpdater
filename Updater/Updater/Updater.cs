@@ -19,12 +19,13 @@ namespace Updater
                     switch (metadataReader.Name) {
                         case "Package": {
                                 // Package metadata is stored as attributes
+                                int id = Convert.ToInt32(metadataReader.GetAttribute("Id"));
                                 string name = metadataReader.GetAttribute("Name");
                                 string hash = metadataReader.GetAttribute("Hash");
                                 long size = Convert.ToInt64(metadataReader.GetAttribute("Size"));
                                 DateTime modifiedDate = DateTime.FromBinary(Convert.ToInt64(metadataReader.GetAttribute("ModifiedDate")));
 
-                                IPackageMetadata packageMetadata = new PackageMetadata(name, hash, size, modifiedDate);
+                                IPackageMetadata packageMetadata = new PackageMetadata(id, name, hash, size, modifiedDate);
                                 metadataCollection.Add(packageMetadata);
                             }
                             break;
@@ -35,7 +36,7 @@ namespace Updater
             return metadataCollection;
         }
 
-        public IUpdateState DetermineUpdateState(XmlReader metadataReader) {
+        public IUpdateState DetermineUpdateState(IInstalledPackageMetadataCollection installedPackages, IPackageMetadataCollection remotePackages) {
             throw new NotImplementedException();
         }
     }

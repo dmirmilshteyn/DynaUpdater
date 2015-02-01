@@ -8,6 +8,7 @@ namespace Updater
 {
     public interface IPackageMetadata
     {
+        int Id { get; }
         string Name { get; }
         string Hash { get; }
         long Size { get; }
