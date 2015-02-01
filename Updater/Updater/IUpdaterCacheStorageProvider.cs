@@ -17,6 +17,7 @@ namespace Updater
         /// <returns></returns>
         XmlReader GetInstalledPackageMetadataReader();
 
+        Stream CreateTemporaryFile(string fileName);
         void StoreTemporaryFile(string fileName, Stream inputStream);
     }
 }

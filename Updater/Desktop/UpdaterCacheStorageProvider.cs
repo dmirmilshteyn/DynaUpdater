@@ -56,8 +56,12 @@ namespace Updater.Desktop
             }
         }
 
+        public Stream CreateTemporaryFile(string fileName) {
+            return new FileStream(Path.Combine(this.TemporaryDirectory, fileName), FileMode.CreateNew);
+        }
+
         public void StoreTemporaryFile(string fileName, Stream inputStream) {
-            using (FileStream fileStream = new FileStream(Path.Combine(this.TemporaryDirectory, fileName), FileMode.CreateNew)) {
+            using (Stream fileStream = CreateTemporaryFile(fileName)) {
                 inputStream.CopyTo(fileStream);
             }
         }

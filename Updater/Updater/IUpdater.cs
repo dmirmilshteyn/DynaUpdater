@@ -12,5 +12,6 @@ namespace Updater
     {
         IPackageMetadataCollection ParseMetadataCollectionXml(XmlReader metadataReader);
         IUpdateState DetermineUpdateState(IInstalledPackageMetadataCollection installedPackages, IPackageMetadataCollection remotePackages);
+        IUpdateInstaller CreateInstaller();
     }
 }

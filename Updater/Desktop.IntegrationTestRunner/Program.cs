@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -14,7 +15,13 @@ namespace Updater.IntegrationTestRunner
     class Program
     {
         static void Main(string[] args) {
-            string updateSite = ConfigurationManager.AppSettings["updateSite"];
+            Task mainAsyncTask = MainAsync(args);
+            mainAsyncTask.Wait();
+        }
+
+        static async Task MainAsync(string[] args) {
+            Uri updateSite = new Uri(ConfigurationManager.AppSettings["updateSite"]);
+            Uri remotePackageStorageDirectory = new Uri(updateSite, "Packages/");
 
             string baseDirectory = Path.GetFullPath("Testing");
 
@@ -25,18 +32,25 @@ namespace Updater.IntegrationTestRunner
             // Setup the test environment
             Directory.CreateDirectory(baseDirectory);
 
-            IUpdaterCacheStorageProvider storageProvider = new UpdaterCacheStorageProvider(Path.Combine(baseDirectory, "Cache"));
-            IUpdaterCache updaterCache = new UpdaterCache(storageProvider);
+            using (IUpdaterCacheStorageProvider storageProvider = new UpdaterCacheStorageProvider(Path.Combine(baseDirectory, "Cache"))) {
+                IUpdaterCache updaterCache = new UpdaterCache(storageProvider);
 
-            IInstalledPackageMetadataCollection installedPackageMetadataCollection = updaterCache.LoadInstalledMetadataCollection();
-            IPackageMetadataCollection packageMetadataCollection = null;
+                IInstalledPackageMetadataCollection installedPackageMetadataCollection = updaterCache.LoadInstalledMetadataCollection();
+                IPackageMetadataCollection packageMetadataCollection = null;
 
-            IUpdater updater = new Updater();
-            using (XmlReader xmlReader = XmlReader.Create(updateSite)) {
-                packageMetadataCollection = updater.ParseMetadataCollectionXml(xmlReader);
+                IUpdater updater = new Updater();
+                using (XmlReader xmlReader = XmlReader.Create(updateSite.AbsoluteUri)) {
+                    packageMetadataCollection = updater.ParseMetadataCollectionXml(xmlReader);
+                }
+
+                IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
+                IUpdateInstaller updateInstaller = updater.CreateInstaller();
+                foreach (IPackageMetadata packageMetadata in updateState.Packages) {
+                    IPackageAcquisition packageAcquisition = new PackageAcquisition(remotePackageStorageDirectory, storageProvider);
+                    using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
+                    }
+                }
             }
-
-            IUpdateState updateState = updater.DetermineUpdateState(installedPackageMetadataCollection, packageMetadataCollection);
         }
     }
 }

@@ -61,5 +61,9 @@ namespace Updater
 
             return new UpdateState(outdatedPackages);
         }
+
+        public IUpdateInstaller CreateInstaller() {
+            return new UpdateInstaller();
+        }
     }
 }

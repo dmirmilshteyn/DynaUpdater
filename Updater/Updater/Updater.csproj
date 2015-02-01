@@ -38,8 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IInstalledPackageMetadata.cs" />
+    <Compile Include="IPackageAcquisition.cs" />
     <Compile Include="IPackageMetadataCollection.cs" />
     <Compile Include="InstalledPackageMetadata.cs" />
+    <Compile Include="IUpdateInstaller.cs" />
+    <Compile Include="PackageAcquisitionUpdateEventArgs.cs" />
     <Compile Include="PackageMetadataCollection.cs" />
     <Compile Include="IPackage.cs" />
     <Compile Include="IPackageFactory.cs" />
@@ -54,6 +57,7 @@
     <Compile Include="PackageFactory.cs" />
     <Compile Include="PackageMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateInstaller.cs" />
     <Compile Include="Updater.cs" />
     <Compile Include="UpdaterCache.cs" />
     <Compile Include="UpdateState.cs" />
