@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Updater.Installation.Instructions;
 
 namespace Updater
 {
@@ -11,12 +12,14 @@ namespace Updater
     {
         public IPackageMetadata Metadata { get; private set; }
         public ZipArchive Archive { get; private set; }
+        public IInstructionCollection Instructions { get; private set; }
 
         bool disposed = false;
 
-        public Package(IPackageMetadata metadata, ZipArchive archive) {
+        public Package(IPackageMetadata metadata, ZipArchive archive, IInstructionCollection instructions) {
             this.Metadata = metadata;
             this.Archive = archive;
+            this.Instructions = instructions;
         }
 
         public void Dispose() {

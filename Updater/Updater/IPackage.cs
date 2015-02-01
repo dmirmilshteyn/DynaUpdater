@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Updater.Installation.Instructions;
 
 namespace Updater
 {
@@ -11,5 +12,6 @@ namespace Updater
     {
         IPackageMetadata Metadata { get; }
         ZipArchive Archive { get; }
+        IInstructionCollection Instructions { get; }
     }
 }

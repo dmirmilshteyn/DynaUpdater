@@ -38,7 +38,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IInstalledPackageMetadata.cs" />
+    <Compile Include="Installation\Instructions\ExtractInstruction.cs" />
+    <Compile Include="Installation\Instructions\InstructionCollection.cs" />
+    <Compile Include="Installation\Instructions\InstructionType.cs" />
     <Compile Include="IPackageAcquisition.cs" />
+    <Compile Include="Installation\Instructions\IInstruction.cs" />
+    <Compile Include="Installation\Instructions\IInstructionCollection.cs" />
     <Compile Include="IPackageMetadataCollection.cs" />
     <Compile Include="InstalledPackageMetadata.cs" />
     <Compile Include="IUpdateInstaller.cs" />

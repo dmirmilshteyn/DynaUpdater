@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Updater.Desktop;
+using Updater.Installation.Instructions;
 
 namespace Updater.IntegrationTestRunner
 {
@@ -48,8 +49,14 @@ namespace Updater.IntegrationTestRunner
                 foreach (IPackageMetadata packageMetadata in updateState.Packages) {
                     IPackageAcquisition packageAcquisition = new PackageAcquisition(remotePackageStorageDirectory, storageProvider);
                     using (ZipArchive packageArchive = await packageAcquisition.AcquirePackageArchive(packageMetadata)) {
-                        using (IPackage package = new Package(packageMetadata, packageArchive)) {
+                        ZipArchiveEntry installationInstructionsEntry = packageArchive.Entries.First((archiveEntry) => { return (archiveEntry.FullName == "Installation.xml"); });
+                        using (Stream installationInstructionsStream = installationInstructionsEntry.Open()) {
+                            using (XmlReader installationInstructionsReader = XmlReader.Create(installationInstructionsStream)) {
+                                IInstructionCollection instructionCollection = InstructionCollection.LoadFromXml(installationInstructionsReader);
+                                using (IPackage package = new Package(packageMetadata, packageArchive, instructionCollection)) {
 
+                                }
+                            }
                         }
                     }
                 }
